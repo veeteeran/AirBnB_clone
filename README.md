@@ -164,7 +164,7 @@ vagrant@vagrant-ubuntu-trusty-64:~/AirBnB_clone$ ./console.py
 * Update your command interpreter (console.py) to allow show, create, destroy, update and all used with User
 
 ### [9. More classes!]
-Write all those classes that inherit from BaseModel:
+* Write all those classes that inherit from BaseModel:
     * [State](models/state.py)
     * [City](models/city.py)
     * [Amenity](models/amenity.py)
@@ -173,8 +173,20 @@ Write all those classes that inherit from BaseModel:
     
 
 ### [10. Console 1.0]
-* Update FileStorage to manage correctly serialization and deserialization of all our new classes: Place, State, City, Amenity and Review
-* Update your command interpreter (console.py) to allow those actions: show, create, destroy, update and all with all classes created previously.
+* Update FileStorage to manage correctly serialization and deserialization of all our new classes:
+    * [State](models/state.py)
+    * [City](models/city.py)
+    * [Amenity](models/amenity.py)
+    * [Place](models/place.py)
+    * [Review](models/review.py)
+* Update your command interpreter (console.py) to allow those actions:
+    * `create`
+    * `show`
+    * `destroy`
+    * `all`
+    * `update`
+
+with all classes created previously.
 
 ---
 
