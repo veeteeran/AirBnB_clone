@@ -20,7 +20,7 @@ class FileStorage:
         Parameters: Takes in an object and adds it to the dictionary __objects
         the key is the obj class+ obj id, the value is the dict of the obj
         """
-        return self.__objects.update(str((type(obj).__name__)+'.'+(obj.id)): obj.to_dict())
+        return self.__objects.update({str((type(obj).__name__)+'.'+(obj.id)): obj.to_dict()})
     
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
