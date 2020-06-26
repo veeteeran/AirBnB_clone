@@ -34,8 +34,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(bm1.id, bm2.id)
         self.assertIsInstance(bm1.id, str)
 
-    # Add tests for created_at and updated_at???
-
     def test_str(self):
         """Test for __str__ method"""
         print("testing __str__method...")
@@ -64,6 +62,21 @@ class TestBaseModel(unittest.TestCase):
         bm1.save()
         postchange = bm1.updated_at
         self.assertNotEqual(prechange, postchange)
+
+    def test_kwargs(self):
+        """Test for kwargs"""
+        print("Testing for kwargs")
+        bm1 = BaseModel()
+        bm1.name = "Holberton"
+        bm1.my_number = 89
+        bm1_json = bm1.to_dict()
+
+        bm2 = BaseModel(**bm1_json)
+        self.assertEqual(bm1.id, bm2.id)
+        self.assertEqual(bm1.created_at, bm2.created_at)
+        self.assertEqual(bm1.updated_at, bm2.updated_at)
+        self.assertEqual(bm1.name, bm2.name)
+        self.assertEqual(bm1.my_number, bm2.my_number)
 
     if __name__ == "__main__":
         unittest.main()
