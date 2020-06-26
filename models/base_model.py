@@ -1,7 +1,8 @@
 #!/usr/bin python3
 """ One base model to rule them all """
 import uuid
-from datetime import datetime 
+from datetime import datetime
+
 
 class BaseModel:
     """
@@ -31,12 +32,17 @@ class BaseModel:
         """
         Builds the dict representation of the object
         """
-        dict_in_box = {}
+        dict_in_box = {'__classname__': self.__class__.__name__}
         for key, value in self.__dict__.items():
-            if key is type(datetime):
-                time_key = str(key)
+            if key == 'created_at':
+                time_key = 'created_at'
                 time_value = value.strftime("%Y-%m-%dT%H:%M:%S.%f")
-                dict_in_box.update({time_key:time_value})
+                dict_in_box.update({time_key: time_value})
+            elif key == 'updated_at':
+                time_key = 'updated_at'
+                time_value = value.strftime("%Y-%m-%dT%H:%M:%S.%f")
+                dict_in_box.update({time_key: time_value})
             else:
-                dict_in_box.update({key:value})
+                dict_in_box.update({key: value})
+
         return dict_in_box
