@@ -1,6 +1,7 @@
 #!/usr/bin/ptyhon3
 """The first firle storage engine of HolBnB"""
 import json
+import os
 
 
 class FileStorage:
@@ -8,7 +9,8 @@ class FileStorage:
 
     def __init__(self, *args, **kwargs):
         self.__objects = {}
-        self.__file_path = "./model/engine/json/"
+        self.__file_path = os.getcwd() + "/models/engine/json/"
+        print("The path: " + str(self.__file_path))
 
     def all(self):
         """returns the dictionary __objects"""
@@ -21,14 +23,15 @@ class FileStorage:
         the key is the obj class+ obj id, the value is the dict of the obj
         """
         return self.__objects.update({str((type(obj).__name__)+'.'+(obj.id)): obj.to_dict()})
-    
+
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
-        with open(self.__file_path + 'file.json', 'w') as output:
+        filename = self.__file_path + 'file.json'
+        with open(filename, 'w') as output:
             json.dump(self.__objects, output)
 
     def reload(self):
-        """deserializes the JSON file to __objects if JSON __file_path exists"""
+        """deserializes the JSON file to __objects if __file_path exists"""
         try:
             with open(self.__file_path + 'file.json') as saved_data:
                 self.__objects = json.load(saved_data)
