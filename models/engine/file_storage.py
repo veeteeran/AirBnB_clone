@@ -8,7 +8,7 @@ class FileStorage:
 
     def __init__(self, *args, **kwargs):
         self.__objects = {}
-        self.__file_path = "./model/engine/json"
+        self.__file_path = "./model/engine/json/"
 
     def all(self):
         """returns the dictionary __objects"""
