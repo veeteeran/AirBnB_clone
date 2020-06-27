@@ -1,6 +1,6 @@
 #!/usr/bin/ptyhon3
 """The first firle storage engine of HolBnB"""
-import JSON
+import json
 
 
 class FileStorage:
