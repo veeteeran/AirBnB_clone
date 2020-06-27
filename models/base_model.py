@@ -2,6 +2,7 @@
 """ One base model to rule them all """
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -30,6 +31,9 @@ class BaseModel:
                 else:
                     setattr(self, k, v)
 
+        if 'id' not in kwargs:
+            storage.new(self)
+
     def __str__(self):
         """
         Returns the string format of the object
@@ -41,6 +45,7 @@ class BaseModel:
         Updates the updated at time to now, to reflect changes
         """
         self.updated_at = datetime.now()
+        storage.new(self)
 
     def to_dict(self):
         """
