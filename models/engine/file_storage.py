@@ -8,7 +8,7 @@ class FileStorage:
 
     def __init__(self, *args, **kwargs):
         self.__objects={}
-        self.__file_path="""filepath"""
+        self.__file_path="./model/engine/json"
 
     def all(self):
         """returns the dictionary __objects"""
@@ -24,7 +24,10 @@ class FileStorage:
     
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
-        json.dumps(self.__objects)
+        with open(self.__file_path + 'file.json', 'w') as output:
+            json.dump(self.__objects, output)
 
     def reload(self):
         """deserializes the JSON file to __objects if JSON __file_path exists"""
+        with open(self.__file_path + 'file.json') as json_load:
+            self.__objects = json_load
