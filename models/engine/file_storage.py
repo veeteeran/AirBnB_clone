@@ -7,8 +7,8 @@ class FileStorage:
     """ A class to serialize and deserialize JSON and Python Dicts """
 
     def __init__(self, *args, **kwargs):
-        self.__objects={}
-        self.__file_path="./model/engine/json"
+        self.__objects = {}
+        self.__file_path = "./model/engine/json"
 
     def all(self):
         """returns the dictionary __objects"""
@@ -29,5 +29,8 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects if JSON __file_path exists"""
-        with open(self.__file_path + 'file.json') as json_load:
-            self.__objects = json_load
+        try:
+            with open(self.__file_path + 'file.json') as saved_data:
+                self.__objects = json.load(saved_data)
+        except:
+            pass
