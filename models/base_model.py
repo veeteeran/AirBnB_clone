@@ -45,7 +45,7 @@ class BaseModel:
         Updates the updated at time to now, to reflect changes
         """
         self.updated_at = datetime.now()
-        storage.new(self)
+        storage.save()
 
     def to_dict(self):
         """
