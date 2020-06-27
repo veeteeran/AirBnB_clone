@@ -1,2 +1,7 @@
 #!/usr/bin/python3
-"""An empty init file"""
+"""Docstring for __init__"""
+from models.engine.file_storage import FileStorage
+
+
+storage = FileStorage()
+storage.reload()
