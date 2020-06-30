@@ -17,25 +17,19 @@ class BaseModel:
                 args: variable arguments, won't be used
                 kwargs: variable keyword args
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
-
-        if kwargs is not None:
-            for k, v in kwargs.items():
-                print("key: {} value: {}".format(k, v))
-                if k is '__class__':
-                    pass
-                elif k is 'created_at' or k is 'updated_at':
-                    setattr(
-                        self, k, datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
-                else:
-                    setattr(self, k, v)
-        if 'id' in kwargs:
-            print("BaseModel init. Id in kwargs")
-        if 'id' not in kwargs:
-            print("BaseModel init. Id not in kwargs")
+        if len(kwargs) < 1:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
             storage.new(self)
+
+        else:
+            for k, v in kwargs.items():
+                if k != '__class__':
+                    if k == 'created_at' or k == 'updated_at':
+                        setattr(self, k, datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
+                    else:
+                        setattr(self, k, v)
 
     def __str__(self):
         """
