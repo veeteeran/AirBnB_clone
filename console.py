@@ -33,24 +33,25 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    def do_create(self, *args):
+    def do_create(self, s):
         """
         Creates a new instance of BaseModel
         """
-        if args[0] is None:
+        if s is None:
             print("** class name missing **")
             pass
-        elif args[0] not in self.class_list:
+        elif s not in self.class_list:
             print("** class doesn't exist **")
             pass
 
         new_obj = BaseModel()
         new_obj.save()
 
-    def do_show(self, *args):
+    def do_show(self, s):
         """
         Print class name and uuid
         """
+        args = s.split()
         if len(args) < 1:
             print("** class name missing **")
         elif args[0] not in self.class_list:
@@ -61,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
             all_objs = storage.all()
             key = args[0] + '.' + args[1]
             if key in all_objs:
-                my_obj = BaseModel(all_obj[key])
+                my_obj = BaseModel(all_objs[key])
                 print(my_obj)
             else:
                 print("** no instance found **")
