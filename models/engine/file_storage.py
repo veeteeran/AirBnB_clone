@@ -7,7 +7,7 @@ import os
 class FileStorage:
     """ A class to serialize and deserialize JSON and Python Dicts """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         self.__objects = {}
         self.__file_path = os.getcwd() + "/models/engine/json/"
 
@@ -21,7 +21,8 @@ class FileStorage:
         Parameters: Takes in an object and adds it to the dictionary __objects
         the key is the obj class+ obj id, the value is the dict of the obj
         """
-        return self.__objects.update({str((type(obj).__name__)+'.'+(obj.id)): obj})
+        key = str((type(obj).__name__) + '.' + (obj.id))
+        return self.__objects.update({key: obj})
 
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
@@ -40,9 +41,14 @@ class FileStorage:
             with open(self.__file_path + 'file.json') as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
-                    new_obj = BaseModel(v)
-                    key = str((type(new_obj).__name__)+'.'+(new_obj.id))
-                    if key not in self.__objects.keys():
-                        self.__objects.update({key: new_obj})
+#                    print("Value: ")
+#                    print(v)
+                    new_obj = BaseModel(**v)
+#                    print("new_obj: ")
+#                    print(new_obj)
+                    key = str((type(new_obj).__name__) + '.' + (new_obj.id))
+#                    print("Key: " + key)
+                    #if key not in self.__objects.keys():
+                    self.__objects.update({key: new_obj})
         except:
             pass

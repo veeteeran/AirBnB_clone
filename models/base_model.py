@@ -23,6 +23,7 @@ class BaseModel:
 
         if kwargs is not None:
             for k, v in kwargs.items():
+                print("key: {} value: {}".format(k, v))
                 if k is '__class__':
                     pass
                 elif k is 'created_at' or k is 'updated_at':
@@ -30,8 +31,10 @@ class BaseModel:
                         self, k, datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
                 else:
                     setattr(self, k, v)
-
+        if 'id' in kwargs:
+            print("BaseModel init. Id in kwargs")
         if 'id' not in kwargs:
+            print("BaseModel init. Id not in kwargs")
             storage.new(self)
 
     def __str__(self):
