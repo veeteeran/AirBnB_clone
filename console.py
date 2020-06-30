@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_destroy(self, *args):
+    def do_destroy(self, s):
         """
         Deletes an instance based on the class name and id
 
@@ -75,13 +75,14 @@ class HBNBCommand(cmd.Cmd):
                 class_name: name of the class
                 uuid: id of object
         """
-        if args[0] is None:
+        args = s.split()
+        if len(args) < 1:
             print("** class name missing **")
             pass
         elif args[0] not in self.class_list:
             print("** class doesn't exist **")
             pass
-        elif args[1] is None:
+        elif len(args) < 2:
             print("** instance id missing **")
             pass
 
@@ -93,13 +94,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
-    def do_all(self, *args):
+    def do_all(self, s):
         """
         Prints all string representation of all instances
 
             Parameter:
                 args: name of class, optional parameter
         """
+        args = s.split()
         if args[0] not in self.class_list:
             print("** class doesn't exist **")
             pass
@@ -110,7 +112,8 @@ class HBNBCommand(cmd.Cmd):
                 my_obj = BaseModel(all_objs[key])
                 my_list.append(my_obj.__str__)
 
-    def do_update(self, *args):
+    def do_update(self, s):
+        args = s.split()
         if args[0] is None:
             print("** class name missing **")
         if args[0] not in self.class_list:
