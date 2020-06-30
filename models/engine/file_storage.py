@@ -7,9 +7,8 @@ import os
 class FileStorage:
     """ A class to serialize and deserialize JSON and Python Dicts """
 
-    def __init__(self):
-        self.__objects = {}
-        self.__file_path = os.getcwd() + "/models/engine/json/"
+    __objects = {}
+    __file_path = os.getcwd() + "/models/engine/json/"
 
     def all(self):
         """returns the dictionary __objects"""
@@ -41,14 +40,8 @@ class FileStorage:
             with open(self.__file_path + 'file.json') as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
-#                    print("Value: ")
-#                    print(v)
                     new_obj = BaseModel(**v)
-#                    print("new_obj: ")
-#                    print(new_obj)
                     key = str((type(new_obj).__name__) + '.' + (new_obj.id))
-#                    print("Key: " + key)
-                    #if key not in self.__objects.keys():
                     self.__objects.update({key: new_obj})
         except:
             pass
