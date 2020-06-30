@@ -46,6 +46,7 @@ class HBNBCommand(cmd.Cmd):
 
         new_obj = BaseModel()
         new_obj.save()
+        print(new_obj.id)
 
     def do_show(self, s):
         """
@@ -85,14 +86,14 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
             pass
-
-        all_objs = storage.all()
-        key = args[0] + '.' + args[1]
-        if key in all_objs:
-            my_obj = BaseModel(all_obj[key])
-            del my_obj
         else:
-            print("** no instance found **")
+            all_objs = storage.all()
+            key = args[0] + '.' + args[1]
+            if key in all_objs:
+                del all_objs[key]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, s):
         """
@@ -102,44 +103,41 @@ class HBNBCommand(cmd.Cmd):
                 args: name of class, optional parameter
         """
         args = s.split()
-        if args[0] not in self.class_list:
+        if len(args) > 0 and args[0] not in self.class_list:
             print("** class doesn't exist **")
-            pass
-        elif args[0] is "BaseModel" or args[0] is None:
+        elif args == [] or args[0] == "BaseModel":
             all_objs = storage.all()
             my_list = []
             for key in all_objs:
-                my_obj = BaseModel(all_objs[key])
-                my_list.append(my_obj.__str__)
+                my_list.append(all_objs[key])
+            print(my_list)
 
     def do_update(self, s):
+        """
+        Updates an instance based on the class name
+        """
         args = s.split()
-        if args[0] is None:
+        if len(args) == 0:
             print("** class name missing **")
-        if args[0] not in self.class_list:
+        elif args[0] not in self.class_list:
             print("** class doesn't exist **")
-            pass
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            pass
-        if len(args) < 3:
+        elif len(args) < 3:
             print("** attribute name missing **")
-            pass
-        if len(args) < 4:
+        elif len(args) < 4:
             print("** value missing **")
-            pass
-
-        all_objs = storage.all()
-        update_key = args[0] + '.' + args[1]
-        for key in all_obj:
-            if key is update_key:
-                selected_obj_dict = all_obj[key]
-                if args[2] in selected_obj_dict:
-                    cast = type(selected_obj_dict[args[2]])
-                    selected_obj_dict[args[2]] = cast(args[3])
-                else:
-                    select_obj_dict.update({args[2]: args[3]})
-
+        else:
+            all_objs = storage.all()
+            key = args[0] + '.' + args[1]
+            if key in all_objs:
+                obj_dict = all_objs[key].to_dict()
+                my_obj = all_objs[key]
+                if args[2] in obj_dict:
+                    cast = type(my_obj.args[3])
+                    cast(args[3])
+                setattr(my_obj, args[2], args[3])
+                my_obj.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
