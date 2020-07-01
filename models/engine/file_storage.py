@@ -43,6 +43,5 @@ class FileStorage:
                     new_obj = BaseModel(**v)
                     key = str((type(new_obj).__name__) + '.' + (new_obj.id))
                     self.__objects.update({key: new_obj})
-                print(self.__objects)
         except:
             pass
