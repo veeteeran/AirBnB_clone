@@ -51,13 +51,10 @@ class FileStorage:
             with open(self.__file_path) as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
-                    print("IN NEWDICT K: {} V: {}".format(k, v))
                     for key in classes.keys():
-                        if new_dict[k]['__class__'] == classes[key]:
+                        if str(new_dict[k]['__class__']) == key:
                             new_obj = classes[key](**v)
                             key = str((type(new_obj).__name__) + '.' + (new_obj.id))
-                    print("The Key in Reload: {} ".format(key))
-
-                    self.__objects.update({key: new_obj})
+                            self.__objects.update({key: new_obj})
         except:
-            pass
+            print("Something went wrong somewhere, this is from reload, Good Luck!")
