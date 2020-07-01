@@ -3,8 +3,8 @@
 from models.base_model import BaseModel
 
 
-class Amenity(BaseModel):
-    """
-    A class of amenity information
+class User(BaseModel):
+    """ 
+    A class of amenity information 
     """
     name = ""

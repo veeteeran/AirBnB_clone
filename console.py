@@ -46,12 +46,12 @@ class HBNBCommand(cmd.Cmd):
         """
         if s is None:
             print("** class name missing **")
-        elif s in self.class_list:
-            new_obj = BaseModel()
-            new_obj.save()
-            print(new_obj.id)
-        else:
+        elif s not in self.class_list:
             print("** class doesn't exist **")
+
+        new_obj = BaseModel()
+        new_obj.save()
+        print(new_obj.id)
 
     def do_show(self, s):
         """
@@ -111,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
             all_objs = storage.all()
             my_list = []
             for key in all_objs:
-                my_list.append(all_objs[key].__str__())
+                my_list.append(all_objs[key])
             print(my_list)
 
     def do_update(self, s):
@@ -125,24 +125,21 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
         else:
             all_objs = storage.all()
             key = args[0] + '.' + args[1]
             if key in all_objs:
-                if len(args) < 3:
-                    print("** attribute name missing **")
-                elif len(args) < 4:
-                    print("** value missing **")
-                else:
-                    obj_dict = all_objs[key].to_dict()
-                    my_obj = all_objs[key]
-                    if args[2] in obj_dict:
-                        cast = type(my_obj.args[3])
-                        cast(args[3])
-                    setattr(my_obj, args[2], args[3])
-                    my_obj.save()
-            else:
-                print("** no instance found **")
+                obj_dict = all_objs[key].to_dict()
+                my_obj = all_objs[key]
+                if args[2] in obj_dict:
+                    cast = type(my_obj.args[3])
+                    cast(args[3])
+                setattr(my_obj, args[2], args[3])
+                my_obj.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
