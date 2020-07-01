@@ -4,6 +4,7 @@ import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
+from sys import stdin
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,6 +32,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Type ctrl + D to exit the programm
         """
+        if not stdin.isatty():
+            print()
+
         return True
 
     def do_create(self, s):
