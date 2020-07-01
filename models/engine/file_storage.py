@@ -54,7 +54,9 @@ class FileStorage:
                     for key in classes.keys():
                         if str(new_dict[k]['__class__']) == key:
                             new_obj = classes[key](**v)
-                            key = str((type(new_obj).__name__) + '.' + (new_obj.id))
+                            key = str((type(new_obj).__name__) + '.' +
+                                      (new_obj.id))
                             self.__objects.update({key: new_obj})
         except:
-            print("Something went wrong somewhere, this is from reload, Good Luck!")
+            print("Something went wrong somewhere,\
+            this is from reload, Good Luck!")
