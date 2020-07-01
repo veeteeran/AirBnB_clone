@@ -3,7 +3,7 @@
 from models.base_model import BaseModel
 
 
-class User(BaseModel):
+class Review(BaseModel):
     """ 
     A class of review information for units in HolBnb 
     """

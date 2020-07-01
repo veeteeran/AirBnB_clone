@@ -3,7 +3,7 @@
 from models.base_model import BaseModel
 
 
-class User(BaseModel):
+class Place(BaseModel):
     """ 
     A class of place information which ties together
     city, state, user, reviews, amenities, as well as
