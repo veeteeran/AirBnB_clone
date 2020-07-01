@@ -21,7 +21,6 @@ class FileStorage:
         the key is the obj class+ obj id, the value is the dict of the obj
         """
         key = str((type(obj).__name__) + '.' + (obj.id))
-        print("The Key in New: {}".format(key))
         return self.__objects.update({key: obj})
 
     def save(self):
@@ -53,12 +52,12 @@ class FileStorage:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
                     print("IN NEWDICT K: {} V: {}".format(k, v))
-                    if new_dict[k]['__class__'] in classes.keys():
-                        new_obj = classes[new_dict[k].__class__](**v)
-                        key = str((type(new_obj).__name__) + '.' + (new_obj.id))
+                    for key in classes.keys():
+                        if new_dict[k]['__class__'] == classes[key]:
+                            new_obj = classes[key](**v)
+                            key = str((type(new_obj).__name__) + '.' + (new_obj.id))
                     print("The Key in Reload: {} ".format(key))
 
                     self.__objects.update({key: new_obj})
-                print(self.__objects)
         except:
             pass
