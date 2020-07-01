@@ -44,6 +44,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Creates a new instance of BaseModel
         """
+        if not sys.stdin.isatty():
+            print()
+
         if s is None:
             print("** class name missing **")
         elif s in self.class_list:
@@ -57,6 +60,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Print class name and uuid
         """
+        if not sys.stdin.isatty():
+            print()
+
         args = s.split()
         if len(args) < 1:
             print("** class name missing **")
@@ -78,6 +84,9 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id
 
         """
+        if not sys.stdin.isatty():
+            print()
+
         args = s.split()
         if len(args) < 1:
             print("** class name missing **")
@@ -104,6 +113,9 @@ class HBNBCommand(cmd.Cmd):
             Parameter:
                 args: name of class, optional parameter
         """
+        if not sys.stdin.isatty():
+            print()
+
         args = s.split()
         if len(args) > 0 and args[0] not in self.class_list:
             print("** class doesn't exist **")
@@ -118,6 +130,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Updates an instance based on the class name
         """
+        if not sys.stdin.isatty():
+            print()
+
         args = s.split()
         if len(args) == 0:
             print("** class name missing **")
