@@ -37,9 +37,8 @@ class BaseModel:
         Returns the string format of the object
         """
         '''name = self.__class__.__name__'''
-        name = "BaseModel"
 
-        return "[{}] ({}) {}".format(name, self.id, self.__dict__)
+        return "[BaseModel] ({}) {}".format(self.id, self.__dict__)
 
     def save(self):
         """
