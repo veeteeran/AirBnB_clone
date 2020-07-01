@@ -8,7 +8,7 @@ class FileStorage:
     """ A class to serialize and deserialize JSON and Python Dicts """
 
     __objects = {}
-    __file_path = os.getcwd() + "/models/engine/json/"
+    __file_path = "file.json"
 
     def all(self):
         """returns the dictionary __objects"""
@@ -25,7 +25,7 @@ class FileStorage:
 
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path)"""
-        filename = self.__file_path + 'file.json'
+        filename = self.__file_path
         with open(filename, 'w') as output:
             new_dict = {}
             for k, v in self.__objects.items():
@@ -37,11 +37,12 @@ class FileStorage:
         """deserializes the JSON file to __objects if __file_path exists"""
         from models.base_model import BaseModel
         try:
-            with open(self.__file_path + 'file.json') as saved_data:
+            with open(self.__file_path) as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
                     new_obj = BaseModel(**v)
                     key = str((type(new_obj).__name__) + '.' + (new_obj.id))
                     self.__objects.update({key: new_obj})
+                print(self.__objects)
         except:
             pass
