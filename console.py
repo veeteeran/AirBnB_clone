@@ -4,7 +4,7 @@ import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
-from sys import stdin
+import sys
 
 
 class HBNBCommand(cmd.Cmd):
@@ -16,23 +16,23 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         pass
 
-    def do_exit(self, *args):
+    def do_exit(self, arg):
         """
         Type exit to exit the program
         """
         return True
 
-    def do_quit(self, *args):
+    def do_quit(self, arg):
         """
         Type quit to exit the program
         """
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, arg):
         """
         Type ctrl + D to exit the programm
         """
-        if not stdin.isatty():
+        if not sys.stdin.isatty():
             print()
 
         return True
@@ -43,10 +43,8 @@ class HBNBCommand(cmd.Cmd):
         """
         if s is None:
             print("** class name missing **")
-            pass
         elif s not in self.class_list:
             print("** class doesn't exist **")
-            pass
 
         new_obj = BaseModel()
         new_obj.save()
@@ -76,9 +74,6 @@ class HBNBCommand(cmd.Cmd):
         """
         Deletes an instance based on the class name and id
 
-            Parameters:
-                class_name: name of the class
-                uuid: id of object
         """
         args = s.split()
         if len(args) < 1:
