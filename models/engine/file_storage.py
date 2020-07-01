@@ -58,4 +58,4 @@ class FileStorage:
                             self.__objects.update({key: new_obj})
                             break
         except:
-            print("Something went wrong somewhere, goodluck! -Reload")
+            pass
