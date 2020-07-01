@@ -1,0 +1,142 @@
+#!/usr/bin/python3
+"""Unit test for BaseModel class"""
+import unittest
+from models.user import User
+
+
+class TestBaseModel(unittest.TestCase):
+    """Unit test for BaseModel class"""
+
+    @classmethod
+    def setUp(cls):
+        print('SetupClass')
+
+    @classmethod
+    def tearDown(cls):
+        print('TearDownClass')
+
+    def setUp(self):
+        """Unit test setup"""
+        print('setUp')
+        self.u1 = User()
+        self.u2 = User()
+
+    def tearDown(self):
+        """Unit test tear down"""
+        del self.u1
+        del self.u2
+
+    def test_init(self):
+        """Test for init method"""
+        print("testing init...")
+        self.assertIsNotNone(self.u1)
+        self.assertIsInstance(self.u1, BaseModel)
+        self.assertIs(type(self.u1), User)
+
+    def test_uuid(self):
+        """Test for uuid attribute"""
+        print("testing uuid...")
+        self.assertTrue(hasattr(self.u1, "id"))
+        self.assertNotEqual(self.u1.id, self.u2.id)
+        self.assertIsInstance(self.u1.id, str)
+
+    def test_email(self):
+        """Test for email attribute"""
+        print("testing email...")
+        self.assertTrue(hasattr(self.u1, "email"))
+        self.assertEqual(self.u1.email, "")
+        self.assertIsInstance(self.u1.email, str)
+
+    def test_first_name(self):
+        """Test for first_name attribute"""
+        print("testing first_name...")
+        self.assertTrue(hasattr(self.u1, "first_name"))
+        self.assertEqual(self.u1.first_name, "")
+        self.assertIsInstance(self.u1.first_name, str)
+
+    def test_last_name(self):
+        """Test for last_name attribute"""
+        print("testing last_name...")
+        self.assertTrue(hasattr(self.u1, "last_name"))
+        self.assertEqual(self.u1.last_name, "")
+        self.assertIsInstance(self.u1.last_name, str)
+
+    def test_str(self):
+        """Test for __str__ method"""
+        print("testing __str__method...")
+        result = len(self.u1.__str__())
+        self.assertTrue(result, 172)
+
+    def test_save(self):
+        """Test for save method"""
+        print("testing save method...")
+        prechange = self.u1.updated_at
+        self.u1.save()
+        postchange = self.u1.updated_at
+        self.assertNotEqual(prechange, postchange)
+
+    def test_created_at(self):
+        """Test for created at time"""
+        print("Testing the created at time attr")
+        self.assertTrue(hasattr(self.bm1, "created_at"))
+
+    def test_updated_at(self):
+        """Test for the updated at time attr"""
+        print("Testing the updated at time attr")
+        prechange = self.u1.updated_at
+        self.bm1.save()
+        postchange = self.u1.updated_at
+        self.assertNotEqual(prechange, postchange)
+
+    def test_kwargs(self):
+        """Test for kwargs"""
+        print("Testing for kwargs")
+        self.u1.name = "Holberton"
+        self.u1.my_number = 89
+        u1_json = self.u1.to_dict()
+
+        u2 = BaseModel(**u1_json)
+        self.assertEqual(self.u1.id, u2.id)
+        self.assertEqual(self.u1.created_at, u2.created_at)
+        self.assertEqual(self.u1.updated_at, u2.updated_at)
+        self.assertEqual(self.bm1.name, bm2.name)
+        self.assertEqual(self.bm1.my_number, bm2.my_number)
+
+    def test_module_docstring(self):
+        """Test for existence of module docstring"""
+        print("testing module docstring...")
+        result = len(__import__('models.user').__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_class_docstring(self):
+        """BaseModel Class Docstring Test"""
+        print("test_class_docstring")
+        result = len(User.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_init_docstring(self):
+        """BaseModel init Docstring Test"""
+        print("test_init_docstring")
+        result = len(self.__init__.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test__str__docstring(self):
+        """BaseModel __str__ Docstring Test"""
+        print("testing __str__ docstring...")
+        result = len(User.__str__.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_save_docstring(self):
+        """BaseModel save method Docstring Test"""
+        print("testing save docstring...")
+        result = len(User.save.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_to_dict_docstring(self):
+        """BaseModel to_dict Docstring Test"""
+        print("testing to_dict docstring...")
+        result = len(User.to_dict.__doc__)
+        self.assertTrue(result > 0, True)
+
+    if __name__ == "__main__":
+        unittest.main()
