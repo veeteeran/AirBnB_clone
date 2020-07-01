@@ -51,8 +51,11 @@ class FileStorage:
             with open(self.__file_path) as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
-                    new_obj = BaseModel(**v)
-                    key = str((type(new_obj).__name__) + '.' + (new_obj.id))
-                    self.__objects.update({key: new_obj})
+                    for key in classes.keys():
+                        if str(new_dict[k]['__class__']) == key:
+                            new_obj = classes[key](**v)
+                            key = str((type(new_obj).__name__) + '.' + (new_obj.id))
+                            self.__objects.update({key: new_obj})
+                            break
         except:
-            pass
+            print("Something went wrong somewhere, goodluck! -Reload")
