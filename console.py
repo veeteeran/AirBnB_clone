@@ -14,6 +14,9 @@ class HBNBCommand(cmd.Cmd):
     class_list = ["BaseModel", "User"]
 
     def emptyline(self):
+        """
+        Reprompt on empty line
+        """
         pass
 
     def do_exit(self, arg):
