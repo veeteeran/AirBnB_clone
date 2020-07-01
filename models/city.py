@@ -3,9 +3,9 @@
 from models.base_model import BaseModel
 
 
-class City(BaseModel):
-    """
-    A class of city information
+class User(BaseModel):
+    """ 
+    A class of city information 
     """
     state_id = ""
     name = ""

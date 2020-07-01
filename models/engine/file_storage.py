@@ -36,27 +36,13 @@ class FileStorage:
     def reload(self):
         """deserializes the JSON file to __objects if __file_path exists"""
         from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {"BaseModel": BaseModel, "User": User,
-                   "Place": Place, "State": State,
-                   "City": City, "Amenity": Amenity,
-                   "Review": Review}
         try:
             with open(self.__file_path) as saved_data:
                 new_dict = json.load(saved_data)
                 for k, v in new_dict.items():
-                    for key in classes.keys():
-                        if str(new_dict[k]['__class__']) == key:
-                            new_obj = classes[key](**v)
-                            key = str((type(new_obj).__name__) + '.' +
-                                      (new_obj.id))
-                            self.__objects.update({key: new_obj})
+                    new_obj = BaseModel(**v)
+                    key = str((type(new_obj).__name__) + '.' + (new_obj.id))
+                    self.__objects.update({key: new_obj})
+                print(self.__objects)
         except:
-            print("Something went wrong somewhere,\
-            this is from reload, Good Luck!")
+            pass
