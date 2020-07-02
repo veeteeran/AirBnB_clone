@@ -47,13 +47,17 @@ class HBNBCommand(cmd.Cmd):
 
         return True
 
+    def default(self, s):
+        """
+        Parses input and executes commands
+        """
+        args = s.split('.')
+        if args[0] in self.class_list:
+            return self.do_all(args[0])
+
     def do_create(self, s):
         """
         Creates a new instance of BaseModel
-        """
-        """
-        if not sys.stdin.isatty():
-            print()
         """
         if s is "":
             print("** class name missing **")
@@ -67,10 +71,6 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, s):
         """
         Print class name and uuid
-        """
-        """
-        if not sys.stdin.isatty():
-            print()
         """
         args = s.split()
         if len(args) < 1:
@@ -119,10 +119,6 @@ class HBNBCommand(cmd.Cmd):
             Parameter:
                 args: name of class, optional parameter
         """
-        """
-        if not sys.stdin.isatty():
-            print()
-        """
         args = s.split()
         my_list = []
         all_objs = storage.all()
@@ -142,10 +138,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, s):
         """
         Updates an instance based on the class name
-        """
-        """
-        if not sys.stdin.isatty():
-            print()
         """
         args = s.split()
         if len(args) == 0:
