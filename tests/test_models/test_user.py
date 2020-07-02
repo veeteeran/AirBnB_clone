@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-"""Unit test for BaseModel class"""
+"""Unit test for User class"""
 import unittest
+from models.base_model import BaseModel
 from models.user import User
 
 
 class TestBaseModel(unittest.TestCase):
-    """Unit test for BaseModel class"""
+    """Unit test for User class"""
 
     @classmethod
     def setUp(cls):
@@ -78,13 +79,13 @@ class TestBaseModel(unittest.TestCase):
     def test_created_at(self):
         """Test for created at time"""
         print("Testing the created at time attr")
-        self.assertTrue(hasattr(self.bm1, "created_at"))
+        self.assertTrue(hasattr(self.u1, "created_at"))
 
     def test_updated_at(self):
         """Test for the updated at time attr"""
         print("Testing the updated at time attr")
         prechange = self.u1.updated_at
-        self.bm1.save()
+        self.u1.save()
         postchange = self.u1.updated_at
         self.assertNotEqual(prechange, postchange)
 
@@ -95,12 +96,12 @@ class TestBaseModel(unittest.TestCase):
         self.u1.my_number = 89
         u1_json = self.u1.to_dict()
 
-        u2 = BaseModel(**u1_json)
+        u2 = User(**u1_json)
         self.assertEqual(self.u1.id, u2.id)
         self.assertEqual(self.u1.created_at, u2.created_at)
         self.assertEqual(self.u1.updated_at, u2.updated_at)
-        self.assertEqual(self.bm1.name, bm2.name)
-        self.assertEqual(self.bm1.my_number, bm2.my_number)
+        self.assertEqual(self.u1.name, u2.name)
+        self.assertEqual(self.u1.my_number, u2.my_number)
 
     def test_module_docstring(self):
         """Test for existence of module docstring"""
@@ -109,31 +110,31 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(result > 0, True)
 
     def test_class_docstring(self):
-        """BaseModel Class Docstring Test"""
+        """User Class Docstring Test"""
         print("test_class_docstring")
         result = len(User.__doc__)
         self.assertTrue(result > 0, True)
 
     def test_init_docstring(self):
-        """BaseModel init Docstring Test"""
+        """User init Docstring Test"""
         print("test_init_docstring")
         result = len(self.__init__.__doc__)
         self.assertTrue(result > 0, True)
 
     def test__str__docstring(self):
-        """BaseModel __str__ Docstring Test"""
+        """User __str__ Docstring Test"""
         print("testing __str__ docstring...")
         result = len(User.__str__.__doc__)
         self.assertTrue(result > 0, True)
 
     def test_save_docstring(self):
-        """BaseModel save method Docstring Test"""
+        """User save method Docstring Test"""
         print("testing save docstring...")
         result = len(User.save.__doc__)
         self.assertTrue(result > 0, True)
 
     def test_to_dict_docstring(self):
-        """BaseModel to_dict Docstring Test"""
+        """User to_dict Docstring Test"""
         print("testing to_dict docstring...")
         result = len(User.to_dict.__doc__)
         self.assertTrue(result > 0, True)
