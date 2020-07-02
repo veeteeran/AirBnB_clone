@@ -34,6 +34,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.p1, BaseModel)
         self.assertIs(type(self.p1), Place)
 
+    def test_uuid(self):
+        """Test for uuid attribute"""
+        print("testing uuid...")
+        self.assertTrue(hasattr(self.p1, "id"))
+        self.assertNotEqual(self.p1.id, self.p2.id)
+        self.assertIsInstance(self.p1.id, str)
+
     def test_city_id(self):
         """Test for city_id attribute"""
         print("testing city_id...")
@@ -110,6 +117,83 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.p1, "amenity_ids"))
         self.assertEqual(self.p1.amenity_ids, "")
         self.assertIsInstance(self.p1.amenity_ids, str)
+
+    def test_str(self):
+        """Test for __str__ method"""
+        print("testing __str__method...")
+        result = len(self.p1.__str__())
+        self.assertTrue(result, 172)
+
+    def test_save(self):
+        """Test for save method"""
+        print("testing save method...")
+        prechange = self.p1.updated_at
+        self.p1.save()
+        postchange = self.p1.updated_at
+        self.assertNotEqual(prechange, postchange)
+
+    def test_created_at(self):
+        """Test for created at time"""
+        print("Testing the created at time attr")
+        self.assertTrue(hasattr(self.p1, "created_at"))
+
+    def test_updated_at(self):
+        """Test for the updated at time attr"""
+        print("Testing the updated at time attr")
+        prechange = self.p1.updated_at
+        self.p1.save()
+        postchange = self.p1.updated_at
+        self.assertNotEqual(prechange, postchange)
+
+    def test_kwargs(self):
+        """Test for kwargs"""
+        print("Testing for kwargs")
+        self.p1.name = "Holberton"
+        self.p1.my_number = 89
+        p1_json = self.p1.to_dict()
+
+        p2 = BaseModel(**p1_json)
+        self.assertEqual(self.p1.id, p2.id)
+        self.assertEqual(self.p1.created_at, p2.created_at)
+        self.assertEqual(self.p1.updated_at, p2.updated_at)
+        self.assertEqual(self.p1.name, p2.name)
+        self.assertEqual(self.p1.my_number, p2.my_number)
+
+    def test_module_docstring(self):
+        """Test for existence of module docstring"""
+        print("testing module docstring...")
+        result = len(__import__('models.place').__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_class_docstring(self):
+        """Place Class Docstring Test"""
+        print("test_place_docstring")
+        result = len(Place.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_init_docstring(self):
+        """Place init Docstring Test"""
+        print("test_init_docstring")
+        result = len(self.__init__.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test__str__docstring(self):
+        """Place __str__ Docstring Test"""
+        print("testing __str__ docstring...")
+        result = len(Place.__str__.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_save_docstring(self):
+        """Place save method Docstring Test"""
+        print("testing save docstring...")
+        result = len(Place.save.__doc__)
+        self.assertTrue(result > 0, True)
+
+    def test_to_dict_docstring(self):
+        """Place to_dict Docstring Test"""
+        print("testing to_dict docstring...")
+        result = len(Place.to_dict.__doc__)
+        self.assertTrue(result > 0, True)
 
     if __name__ == "__main__":
         unittest.main()

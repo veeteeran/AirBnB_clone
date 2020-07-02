@@ -52,8 +52,17 @@ class HBNBCommand(cmd.Cmd):
         Parses input and executes commands
         """
         args = s.split('.')
+        args[1] = args[1][:-2]
         if args[0] in self.class_list:
-            return self.do_all(args[0])
+            if args[1] == 'all':
+                return self.do_all(args[0])
+            elif args[1] == 'count':
+                all_objs = storage.all()
+                count = 0
+                for k in all_objs:
+                    if args[0] in k:
+                        count += 1
+                print(count)
 
     def do_create(self, s):
         """
@@ -134,6 +143,7 @@ class HBNBCommand(cmd.Cmd):
                 print(my_list)
             else:
                 print("** class doesn't exist **")
+            self.count = 0
 
     def do_update(self, s):
         """
