@@ -43,8 +43,11 @@ class TestBaseModel(unittest.TestCase):
     def test_str(self):
         """Test for __str__ method"""
         print("testing __str__method...")
-        result = len(self.bm1.__str__())
-        self.assertTrue(result, 172)
+        bm1_string = "[{}] ({}) {}".format(
+                        self.bm1.__class__.__name__,
+                        self.bm1.id, self.bm1.__dict__)
+        self.assertEqual(str(self.bm1), bm1_string)
+        self.assertIsInstance(self.bm1.__str__(), str)
 
     def test_save(self):
         """Test for save method"""
