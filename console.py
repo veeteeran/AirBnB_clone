@@ -51,18 +51,21 @@ class HBNBCommand(cmd.Cmd):
         """
         Parses input and executes commands
         """
-        args = s.split('.')
-        args[1] = args[1][:-2]
-        if args[0] in self.class_list:
-            if args[1] == 'all':
+        cls = s.split('.')
+        cmd = cls[1][:-2]
+        if cls[0] in self.class_list:
+            if cmd[0] == 'all':
                 return self.do_all(args[0])
-            elif args[1] == 'count':
+            elif cmd[0] == 'count':
                 all_objs = storage.all()
                 count = 0
                 for k in all_objs:
-                    if args[0] in k:
+                    if cls[0] in k:
                         count += 1
                 print(count)
+            elif cmd[0:4] == 'show':
+                uuid = cmd[6:]
+                return self.do_show(cls[0] + ' ' + uuid)
 
     def do_create(self, s):
         """
