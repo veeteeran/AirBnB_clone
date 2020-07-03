@@ -54,9 +54,9 @@ class HBNBCommand(cmd.Cmd):
         cls = s.split('.')
         cmd = cls[1][:-2]
         if cls[0] in self.class_list:
-            if cmd[0] == 'all':
-                return self.do_all(args[0])
-            elif cmd[0] == 'count':
+            if cmd == 'all':
+                return self.do_all(cls[0])
+            elif cmd == 'count':
                 all_objs = storage.all()
                 count = 0
                 for k in all_objs:
@@ -66,6 +66,9 @@ class HBNBCommand(cmd.Cmd):
             elif cmd[0:4] == 'show':
                 uuid = cmd[6:]
                 return self.do_show(cls[0] + ' ' + uuid)
+            elif cmd[0:7] == 'destroy':
+                uuid = cmd[9:]
+                return self.do_destroy(cls[0] + ' ' + uuid)
 
     def do_create(self, s):
         """
